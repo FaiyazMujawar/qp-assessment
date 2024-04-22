@@ -1,0 +1,22 @@
+{
+  "name": "qp-assessment",
+  "version": "1.0.0",
+  "description": "Grocery Booking API",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Faiyaz Mujawar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "prisma": "^5.12.1",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.7",
+    "tsx": "^4.7.2"
+  }
+}
