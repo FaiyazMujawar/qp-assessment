@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { compareSync, hashSync } from 'bcrypt';
-import { LoginRequest, UserRegistrationRequest } from '../types';
+import { LoginRequest, UserRegistrationRequest } from '../types/app';
 import Database from '../loaders/db';
 import { User } from '@prisma/client';
-import { decodeToken, signToken, verifyToken } from '../services/jwt';
+import { signToken, verifyToken } from '../services/jwt';
 import { ApiException, ExceptionType } from '../exceptions/ApiException';
 import { JWT_REFRESH_TOKEN_EXPIRATION } from '../config';
 
