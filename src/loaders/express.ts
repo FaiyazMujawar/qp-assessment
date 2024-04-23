@@ -18,11 +18,11 @@ export default function loadExpressApp() {
 
   app.use(authenticateUser);
 
-  // Error handling
-  app.use(errorHandler);
-
   app.use('/api/grocery', routes.groceryRoutes);
   app.use('/api/order', routes.orderRoutes);
+
+  // Error handling
+  app.use(errorHandler);
 
   return app;
 }

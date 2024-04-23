@@ -1,0 +1,1 @@
+INSERT INTO "User" (id, firstname, lastname, email, password, role) VALUES ('78034ab3-ac09-49bd-b5c5-8350b53dc023', 'Jane', 'Doe', 'admin@admin.com', '$2b$10$Gj4mrgyYk56bJGy815v2uuBS4ZRNMx3bduFiWPIELFDRXCG9bo9ga', 'ADMIN') ON CONFLICT DO NOTHING;

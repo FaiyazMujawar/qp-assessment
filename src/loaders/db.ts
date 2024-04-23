@@ -3,9 +3,11 @@ import { PrismaClient } from '@prisma/client';
 export default class Database {
   private static prisma: PrismaClient | undefined = undefined;
 
-  static async client() {
+  static get client() {
     if (Database.prisma === undefined) {
-      await Database.connect();
+      if (process.env.NODE_ENV !== 'test') {
+        throw new Error('Database not connected');
+      }
     }
     return Database.prisma;
   }

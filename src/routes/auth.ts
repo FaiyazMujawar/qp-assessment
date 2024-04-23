@@ -16,7 +16,7 @@ router.post(
       const registrationRequest = req.body as UserRegistrationRequest;
       registrationRequest.password = hashSync(registrationRequest.password, 10);
 
-      const db = await Database.client();
+      const db = Database.client!;
       const user: User = await db!.user.create({
         data: registrationRequest,
       });
@@ -34,7 +34,7 @@ router.post(
     try {
       const loginRequest = req.body as LoginRequest;
 
-      const db = await Database.client();
+      const db = Database.client!;
       const user: User | null = await db!.user.findFirst({
         where: { email: loginRequest.email },
       });
@@ -66,7 +66,7 @@ router.post(
         throw new ApiException('Refresh token must be provided');
       }
       const { uid } = verifyToken(refreshToken);
-      const userdb = (await Database.client())!.user;
+      const userdb = Database.client!.user;
       const user: User | null = await userdb.findFirst({ where: { id: uid } });
       if (user == null) {
         throw new ApiException(

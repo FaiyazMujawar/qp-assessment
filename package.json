@@ -4,9 +4,10 @@
   "description": "Grocery Booking API",
   "main": "src/index.ts",
   "scripts": {
-    "prisma:push": "dotenv -e .env.dev -- prisma db push",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:push": "dotenv -e .env.dev -- pnpm run prisma:seed -- prisma db push",
     "dev": "NODE_ENV=dev dotenv -e .env.dev -- tsx watch src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test dotenv -e .env.test -- jest --coverage -w"
   },
   "author": "Faiyaz Mujawar",
   "license": "ISC",
@@ -23,8 +24,14 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.6",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.1.2",
     "tsx": "^4.7.2"
   }
 }

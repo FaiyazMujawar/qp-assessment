@@ -3,7 +3,7 @@ import Database from '../loaders/db';
 import { CreateOrderRequest } from '../types/app';
 
 export async function validateOrder(order: CreateOrderRequest) {
-  const db = await Database.client();
+  const db = Database.client!;
 
   const itemsMap = toItemsMap(order);
   const groceryIds = Object.keys(itemsMap);

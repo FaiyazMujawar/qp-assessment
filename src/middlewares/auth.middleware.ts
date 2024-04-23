@@ -18,7 +18,7 @@ export default async function authenticateUser(
       );
     }
     const { uid } = verifyToken(authHeader.substring(7));
-    const userdb = (await Database.client())!.user;
+    const userdb = Database.client!.user;
     const user: User | null = await userdb.findFirst({ where: { id: uid } });
     if (user === null) {
       throw new ApiException(`User ${uid} not found`, ExceptionType.NOT_FOUND);

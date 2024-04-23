@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/', async (_: Request, res: Response, next: NextFunction) => {
   try {
-    const grocerydb = (await Database.client())!.grocery;
+    const grocerydb = Database.client!.grocery;
     const groceries = await grocerydb.findMany();
     return res.json(groceries);
   } catch (error) {
@@ -19,7 +19,7 @@ router.get('/', async (_: Request, res: Response, next: NextFunction) => {
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const groceryId = req.params.id as string;
-    const grocerydb = (await Database.client())!.grocery;
+    const grocerydb = Database.client!.grocery;
     const grocery = await grocerydb.findFirst({ where: { id: groceryId } });
     if (grocery == null) {
       throw new ApiException(
@@ -39,10 +39,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const request = req.body as CreateGroceryRequest;
-      const grocerydb = (await Database.client())!.grocery;
+      const grocerydb = Database.client!.grocery;
       const grocery = await grocerydb.create({ data: request });
       return res.status(201).json(grocery);
     } catch (error) {
+      console.error(error);
       next(error);
     }
   }
@@ -55,7 +56,7 @@ router.put(
     try {
       const groceryId = req.params.id as string;
       const request = req.body as CreateGroceryRequest;
-      const grocerydb = (await Database.client())!.grocery;
+      const grocerydb = Database.client!.grocery;
       const grocery = await grocerydb.update({
         where: { id: groceryId },
         data: request,
@@ -79,7 +80,7 @@ router.delete(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const groceryId = req.params.id as string;
-      const grocerydb = (await Database.client())!.grocery;
+      const grocerydb = Database.client!.grocery;
       const grocery = await grocerydb.delete({
         where: { id: groceryId },
       });

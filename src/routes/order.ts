@@ -13,7 +13,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.user.id;
-      const orderdb = (await Database.client())!.order;
+      const orderdb = Database.client!.order;
       const orders = await orderdb.findMany({
         where: req.user.role === 'ADMIN' ? {} : { userId },
         select: {
@@ -55,7 +55,7 @@ async function createOrder(
   itemsMap: { [grocery: string]: number },
   user: User
 ) {
-  const orderdb = (await Database.client())!.order;
+  const orderdb = Database.client!.order;
   return await orderdb.create({
     data: {
       user: {
@@ -85,7 +85,7 @@ async function updateGroceryQuantity(
   groceries: Grocery[],
   itemsMap: { [grocery: string]: number }
 ) {
-  const grocerydb = (await Database.client())!.grocery;
+  const grocerydb = Database.client!.grocery;
   groceries.forEach(async ({ id, quantity }) => {
     await grocerydb.update({
       where: { id },
