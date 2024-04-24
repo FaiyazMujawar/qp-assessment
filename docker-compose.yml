@@ -1,0 +1,46 @@
+services:
+  # Database
+  db:
+    container_name: db
+    image: postgres:alpine3.19
+    restart: always
+    env_file: .env.prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - qpa_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  # API
+  api:
+    container_name: api
+    build:
+      context: .
+      args:
+        - DATABASE_URL=${DATABASE_URL}
+    env_file: .env.prod
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER} # required
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD} # required
+      - POSTGRES_DB=qp=${POSTGRES_DB} # required
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - qpa_network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  qpa_network:
+    driver: bridge
