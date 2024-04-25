@@ -7,6 +7,8 @@ import {
   getGroceryByIdHandler,
   updateGroceryHandler,
 } from '../handlers/grocery';
+import validateRequestBody from '../middlewares/body.validation.middleware';
+import { createGrocerySchema } from '../validators/grocery';
 
 const router = Router();
 
@@ -14,7 +16,12 @@ router.get('/', getGroceriesHandler);
 
 router.get('/:id', getGroceryByIdHandler);
 
-router.post('/', validateUserRole('ADMIN'), createGroceryHandler);
+router.post(
+  '/',
+  validateUserRole('ADMIN'),
+  validateRequestBody(createGrocerySchema),
+  createGroceryHandler
+);
 
 router.put('/:id', validateUserRole('ADMIN'), updateGroceryHandler);
 

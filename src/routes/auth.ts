@@ -5,12 +5,18 @@ import {
   refreshTokenHandler,
   registerHandler,
 } from '../handlers/auth';
+import validateRequestBody from '../middlewares/body.validation.middleware';
+import { loginSchema, registerUserSchema } from '../validators/auth';
 
 const router = Router();
 
-router.post('/register', registerHandler);
+router.post(
+  '/register',
+  validateRequestBody(registerUserSchema),
+  registerHandler
+);
 
-router.post('/login', loginHandler);
+router.post('/login', validateRequestBody(loginSchema), loginHandler);
 
 router.post('/refresh-token', refreshTokenHandler);
 

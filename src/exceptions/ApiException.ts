@@ -8,11 +8,14 @@ export enum ExceptionType {
 
 export class ApiException extends Error {
   public type: ExceptionType;
+  public errors: any[] = [];
   constructor(
     message: string,
-    type: ExceptionType = ExceptionType.INTERNAL_SERVER_ERROR
+    type: ExceptionType = ExceptionType.INTERNAL_SERVER_ERROR,
+    errors: any[] = []
   ) {
     super(message);
     this.type = type;
+    this.errors = errors;
   }
 }
