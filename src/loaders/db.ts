@@ -13,7 +13,19 @@ export default class Database {
   }
 
   static async connect() {
-    Database.prisma = new PrismaClient();
-    await Database.prisma.$connect();
+    let tries = 5;
+    while (tries--) {
+      try {
+        Database.prisma = new PrismaClient();
+        await Database.prisma.$connect();
+        break;
+      } catch (error) {
+        if (tries == 0) {
+          throw error;
+        }
+        // sleep for 1 second
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+    }
   }
 }

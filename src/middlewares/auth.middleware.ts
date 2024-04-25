@@ -11,7 +11,7 @@ export default async function authenticateUser(
 ) {
   try {
     const authHeader = req.headers.authorization ?? '';
-    if (!/Bearer .+/.test(authHeader)) {
+    if (!/^Bearer .+/.test(authHeader)) {
       throw new ApiException(
         'Token must be provided',
         ExceptionType.UNAUTHORIZED
