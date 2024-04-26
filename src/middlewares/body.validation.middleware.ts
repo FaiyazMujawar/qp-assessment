@@ -14,6 +14,7 @@ export default function validateRequestBody(schema: Schema) {
           errors
         );
       }
+      next()
     } catch (error) {
       next(error);
     }
